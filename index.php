@@ -12,5 +12,5 @@ $request = new Request();
 
 ## Running the application
 
-$name = $request->getQueriesParams()['name'] ?: 'Guest';
+$name = $request->getQueriesParams()['name'] ?? 'Guest';
 echo 'Hello, ' . $name;

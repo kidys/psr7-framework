@@ -6,12 +6,15 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class RequestTest
+ * @covers \App\Framework\Http\Request
  * @package Tests\Framework\Http
  */
 class RequestTest extends TestCase
 {
     /**
      * Void testing
+     * @covers \App\Framework\Http\Request::getQueriesParams
+     * @covers \App\Framework\Http\Request::getParsedBody
      */
     public function testEmpty() : void
     {
@@ -24,6 +27,7 @@ class RequestTest extends TestCase
 
     /**
      * Testing to get $_GET query parameters
+     * @covers \App\Framework\Http\Request::getQueriesParams
      */
     public function testQueryParams() : void
     {
@@ -40,6 +44,7 @@ class RequestTest extends TestCase
 
     /**
      * Testing for $_POST query parameters
+     * @covers \App\Framework\Http\Request::getParsedBody
      */
     public function testParsedBody() : void
     {
