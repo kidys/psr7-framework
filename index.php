@@ -5,30 +5,69 @@ chdir(dirname(__DIR__));
 ## Initializing the application
 
 /**
+ *
+ * Class Request
+ */
+class Request
+{
+    /**
+     * Get array $_GET
+     *
+     * @return array
+     */
+    public function getQueriesParams() : array
+    {
+        return $_GET;
+    }
+
+    /**
+     * Get array $_COOKIE
+     *
+     * @return array
+     */
+    public function getCookiesData() : array
+    {
+        return $_COOKIE;
+    }
+
+    /**
+     * Get array $_SESSION
+     *
+     * @return array
+     */
+    public function getSessionsData() : array
+    {
+        return $_SESSION;
+    }
+
+    /**
+     * Get array $_SERVER
+     * @return array
+     */
+    public function getServersData() : array
+    {
+        return $_SERVER;
+    }
+}
+
+/**
  * The function of determining the language of the client
  *
- * @param array $request
+ * @param Request $request
  * @param string $default
  * @return string
  */
-function getLang(array $request, string $default = 'en') : string {
-    if (!empty($request['get']['lang'])) return $request['get']['lang'];
-    else if (!empty($request['cookie']['lang'])) return $request['cookie']['lang'];
-    else if (!empty($request['session']['lang'])) return $request['session']['lang'];
-    else if (!empty($request['server']['HTTP_ACCEPT_LANGUAGE']))
-        return substr($request['server']['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+function getLang(Request $request, string $default = 'en') : string {
+    if (!empty($request->getQueriesParams()['lang'])) return $request->getQueriesParams()['lang'];
+    else if (!empty($request->getCookiesData()['lang'])) return $request->getCookiesData()['lang'];
+    else if (!empty($request->getSessionsData()['lang'])) return $request->getSessionsData()['lang'];
+    else if (!empty($request->getServersData()['HTTP_ACCEPT_LANGUAGE']))
+        return substr($request->getServersData()['HTTP_ACCEPT_LANGUAGE'], 0, 2);
     else return $default;
 }
 
 ## Running the application
 
-$request = [
-    'get' => $_GET,
-    'cookie' => $_COOKIE,
-    'session' => $_SESSION,
-    'server' => $_SERVER
-];
-
-$lang = getLang($request);
+$lang = getLang(new Request());
 $name = $_GET['name'] ?: 'Guest';
 echo 'Hello, ' . $name . '! Your lang is "' . $lang . '"';
