@@ -12,13 +12,21 @@ use PHPUnit\Framework\TestCase;
 class RequestTest extends TestCase
 {
     /**
+     * Standard method for initializing the logic under test
+     */
+    public function setUp() : void
+    {
+        parent::setUp();
+        $_GET = $_POST = [];
+    }
+
+    /**
      * Void testing
      * @covers \App\Framework\Http\Request::getQueriesParams
      * @covers \App\Framework\Http\Request::getParsedBody
      */
     public function testEmpty() : void
     {
-        $_GET = $_POST = [];
         $request = new Request();
 
         self::assertEquals([], $request->getQueriesParams());
@@ -28,6 +36,7 @@ class RequestTest extends TestCase
     /**
      * Testing to get $_GET query parameters
      * @covers \App\Framework\Http\Request::getQueriesParams
+     * @covers \App\Framework\Http\Request::getParsedBody
      */
     public function testQueryParams() : void
     {
@@ -35,7 +44,6 @@ class RequestTest extends TestCase
             'name' => 'Denis',
             'age' => 35
         ];
-        $_POST = [];
         $request = new Request();
 
         self::assertEquals($data, $request->getQueriesParams());
@@ -44,11 +52,11 @@ class RequestTest extends TestCase
 
     /**
      * Testing for $_POST query parameters
+     * @covers \App\Framework\Http\Request::getQueriesParams
      * @covers \App\Framework\Http\Request::getParsedBody
      */
     public function testParsedBody() : void
     {
-        $_GET = [];
         $_POST = $data = [
             'name' => 'Denis',
             'age' => 35
