@@ -1,4 +1,6 @@
 <?php
+namespace App\Framework\Http;
+
 /**
  *
  * Class Request
@@ -16,31 +18,12 @@ class Request
     }
 
     /**
-     * Get array $_COOKIE
+     * Get request of the methods POST, PUT, PATCH & DELETE
      *
-     * @return array
+     * @return array|null
      */
-    public function getCookiesData() : array
+    public function getParsedBody() : array
     {
-        return $_COOKIE;
-    }
-
-    /**
-     * Get array $_SESSION
-     *
-     * @return array
-     */
-    public function getSessionsData() : array
-    {
-        return $_SESSION;
-    }
-
-    /**
-     * Get array $_SERVER
-     * @return array
-     */
-    public function getServersData() : array
-    {
-        return $_SERVER;
+        return $_POST ?: null;
     }
 }
