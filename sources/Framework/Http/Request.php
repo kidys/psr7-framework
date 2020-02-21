@@ -22,7 +22,7 @@ class Request
      *
      * @return array|null
      */
-    public function getParsedBody() : array
+    public function getParsedBody() : ?array
     {
         return $_POST ?: null;
     }
