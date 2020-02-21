@@ -7,24 +7,28 @@ chdir(dirname(__DIR__));
 /**
  * The function of determining the language of the client
  *
- * @param $get
- * @param $cookie
- * @param $session
- * @param $server
+ * @param array $request
  * @param string $default
  * @return string
  */
-function getLang($get, $cookie, $session, $server, string $default = 'en') : string {
-    if (!empty($get['lang'])) return $get['lang'];
-    else if (!empty($cookie['lang'])) return $cookie['lang'];
-    else if (!empty($session['lang'])) return $session['lang'];
-    else if (!empty($server['HTTP_ACCEPT_LANGUAGE']))
-        return substr($server['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+function getLang(array $request, string $default = 'en') : string {
+    if (!empty($request['get']['lang'])) return $request['get']['lang'];
+    else if (!empty($request['cookie']['lang'])) return $request['cookie']['lang'];
+    else if (!empty($request['session']['lang'])) return $request['session']['lang'];
+    else if (!empty($request['server']['HTTP_ACCEPT_LANGUAGE']))
+        return substr($request['server']['HTTP_ACCEPT_LANGUAGE'], 0, 2);
     else return $default;
 }
 
 ## Running the application
 
-$lang = getLang($_GET, $_COOKIE, $_SESSION, $_SERVER);
+$request = [
+    'get' => $_GET,
+    'cookie' => $_COOKIE,
+    'session' => $_SESSION,
+    'server' => $_SERVER
+];
+
+$lang = getLang($request);
 $name = $_GET['name'] ?: 'Guest';
 echo 'Hello, ' . $name . '! Your lang is "' . $lang . '"';
