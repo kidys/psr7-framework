@@ -6,7 +6,7 @@ use App\Framework\Http\Request;
 
 ## Initializing the application
 
-require_once __DIR__ . '/sources/Framework/Http/Request.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 $request = new Request();
 
